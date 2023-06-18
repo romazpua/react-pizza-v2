@@ -12,8 +12,9 @@ function App() {
             <div className="content">
                 <div className="container">
                     <div className="content__top">
-                        <Categories sortItems={ [ 'Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые' ] }/>
-                        <Sort/>
+                        <Categories
+                            catigories={ [ 'Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые' ] }/>
+                        <Sort sortItems={ [ 'популярности', 'цене', 'алфавиту' ] }/>
                     </div>
                     <h2 className="content__title">Все пиццы</h2>
                     <div className="content__items">
