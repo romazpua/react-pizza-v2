@@ -1,15 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-const Categories = () => {
+const Categories = ( { sortItems } ) => {
+
+    const [ activeIndex, setActiveIndex ] = useState( 0 )
+
+    const onClickItem = ( index ) => {
+        setActiveIndex( index )
+    }
+
     return (
         <div className="categories">
             <ul>
-                <li className="active">Все</li>
-                <li>Мясные</li>
-                <li>Вегетарианская</li>
-                <li>Гриль</li>
-                <li>Острые</li>
-                <li>Закрытые</li>
+                {
+                    sortItems.map( ( item, index ) => <li key={ item }
+                                                          className={ activeIndex === index ? 'active' : '' }
+                                                          onClick={ () => onClickItem( index ) }>
+                        { item }</li> )
+                }
             </ul>
         </div>
     );
