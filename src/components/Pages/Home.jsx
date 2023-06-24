@@ -16,10 +16,11 @@ const Home = () => {
             setItems( data )
             setIsLoading( false )
         } )
+        window.scrollTo( 0, 0 )
     }, [] )
 
     return (
-        <>
+        <div className="container">
             <div className="content__top">
                 <Categories
                     catigories={ [ 'Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые' ] }/>
@@ -33,7 +34,7 @@ const Home = () => {
                         : items.map( ( obj, index ) => <PizzaBlock key={ obj.title }{ ...obj }/> )
                 }
             </div>
-        </>
+        </div>
     );
 };
 

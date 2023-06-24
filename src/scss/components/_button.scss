@@ -56,6 +56,7 @@
   &--outline {
     background-color: #fff;
     border-color: $orange;
+
     &,
     span {
       color: $orange;
@@ -143,6 +144,10 @@
     span {
       font-weight: 600;
       font-size: 16px;
+    }
+
+    @media (max-width: 600px) {
+      padding: 8px 16px
     }
   }
 }
