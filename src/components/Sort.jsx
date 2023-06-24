@@ -10,6 +10,11 @@ const Sort = ( { sortItems } ) => {
         document.body.addEventListener( 'click', handleOutsideClick )
     }, [] )
 
+    const onClickSortItem = (index) => {
+        setActiveSortItem( index )
+        setShowPopup( false )
+    }
+
     const handleOutsideClick = ( e ) => {
         if ( !e.composedPath().includes( sort.current ) ) {
             setShowPopup( false )
@@ -38,7 +43,7 @@ const Sort = ( { sortItems } ) => {
                     <ul>
                         {
                             sortItems.map( ( el, index ) => <li key={ el }
-                                                                onClick={ () => setActiveSortItem( index ) }
+                                                                onClick={ () => onClickSortItem( index ) }
                                                                 className={ activeSortItem === index ? 'active' : '' }>{ el }</li> )
                         }
                     </ul>
