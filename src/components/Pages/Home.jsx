@@ -9,22 +9,43 @@ const Home = () => {
     const [ items, setItems ] = useState( [] )
     const [ isLoading, setIsLoading ] = useState( true )
 
+    const [ categoryId, setCategoryId ] = useState( 0 )
+    const [ sortType, setSortType ] = useState( { name: 'популярности', sortProperty: 'rating' } )
+
     useEffect( () => {
-        fetch( 'https://649492be0da866a95367fe18.mockapi.io/items' )
+        setIsLoading( true )
+
+        const category = categoryId > 0 ? `category=${ categoryId }` : ``
+        const sortBy = sortType.sortProperty.replace( '-', '' )
+        const order = sortType.sortProperty.includes( '-' ) ? 'asc' : 'desc'
+
+        fetch( `https://649492be0da866a95367fe18.mockapi.io/items?${ category }&sortBy=${ sortBy }&order=${ order }` )
         .then( response => response.json() )
         .then( data => {
             setItems( data )
             setIsLoading( false )
         } )
         window.scrollTo( 0, 0 )
-    }, [] )
+    }, [ categoryId, sortType ] )
 
     return (
         <div className="container">
             <div className="content__top">
                 <Categories
-                    catigories={ [ 'Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые' ] }/>
-                <Sort sortItems={ [ 'популярности', 'цене', 'алфавиту' ] }/>
+                    value={ categoryId }
+                    onClickCategory={ ( index ) => setCategoryId( index ) }
+                    categories={ [ 'Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые' ] }/>
+                <Sort
+                    value={ sortType }
+                    onChangeSort={ ( index ) => setSortType( index ) }
+                    sortItems={ [
+                        { name: 'популярности ↓', sortProperty: 'rating' },
+                        { name: 'популярности ↑', sortProperty: '-rating' },
+                        { name: 'цене ↓', sortProperty: 'price' },
+                        { name: 'цене ↑', sortProperty: '-price' },
+                        { name: 'алфавиту ↓', sortProperty: 'title' },
+                        { name: 'алфавиту ↑', sortProperty: '-title' }
+                    ] }/>
             </div>
             <h2 className="content__title">Все пиццы</h2>
             <div className="content__items">

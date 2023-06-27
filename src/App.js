@@ -7,6 +7,12 @@ import NotFound from './components/Pages/NotFound';
 
 function App() {
 
+    // const url = new URL( 'https://649492be0da866a95367fe18.mockapi.io/items' )
+    // url.searchParams.append( 'title', 'пепперони' )
+    // useEffect( () => {
+    //     fetch( url ).then( data => data.json() ).then( data => console.log( data ) )
+    // }, [] )
+
     return (
         <div className="wrapper">
             <Header/>
