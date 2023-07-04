@@ -32,7 +32,7 @@ body {
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-rows: repeat(1, 1fr);
     grid-column-gap: 3.6%;
     grid-row-gap: 5px;
     @media (max-width: 1480px) {
@@ -46,7 +46,7 @@ body {
     }
   }
 
-  &__cart-items{
+  &__cart-items {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
