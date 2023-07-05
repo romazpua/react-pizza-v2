@@ -4,28 +4,26 @@ import Header from './components/Header';
 import Home from './components/Pages/Home';
 import Cart from './components/Pages/Cart';
 import NotFound from './components/Pages/NotFound';
-import { useState } from 'react';
+import { createContext, useState } from 'react';
+
+export const SearchContext = createContext(undefined)
 
 function App() {
 
     const [ searchValue, setSearchValue ] = useState( '' )
 
-    // const url = new URL( 'https://649492be0da866a95367fe18.mockapi.io/items' )
-    // url.searchParams.append( 'title', 'пепперони' )
-    // useEffect( () => {
-    //     fetch( url ).then( data => data.json() ).then( data => console.log( data ) )
-    // }, [] )
-
     return (
         <div className="wrapper">
-            <Header searchValue={ searchValue } setSearchValue={ setSearchValue }/>
-            <div className="content">
-                <Routes>
-                    <Route path={ '/' } element={ <Home searchValue={searchValue}/> }/>
-                    <Route path={ '/cart' } element={ <Cart/> }/>
-                    <Route path={ '*' } element={ <NotFound/> }/>
-                </Routes>
-            </div>
+            <SearchContext.Provider value={ { searchValue, setSearchValue } }>
+                <Header/>
+                <div className="content">
+                    <Routes>
+                        <Route path={ '/' } element={ <Home/> }/>
+                        <Route path={ '/cart' } element={ <Cart/> }/>
+                        <Route path={ '*' } element={ <NotFound/> }/>
+                    </Routes>
+                </div>
+            </SearchContext.Provider>
         </div>
     )
 }
