@@ -1,11 +1,29 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem } from '../../redux/slices/cartSlice';
 
 const typeNames = [ 'традиционное', 'тонкое' ]
 
-const Index = ( { imageUrl, title, types, sizes, price } ) => {
+const PizzaBlock = ( { id, imageUrl, title, types, sizes, price } ) => {
 
+    const dispatch = useDispatch()
+    const cartItem = useSelector( state => state.cart.items.find( obj => obj.id === id ) )
     const [ activeType, setActiveType ] = useState( 0 )
     const [ activeSize, setActiveSize ] = useState( 0 )
+
+    const addedCount = cartItem ? cartItem.count : 0
+
+    const onClickAdd = () => {
+        const item = {
+            id,
+            title,
+            price,
+            imageUrl,
+            type: typeNames[ activeType ],
+            size: sizes[ activeSize ]
+        }
+        dispatch( addItem( item ) )
+    }
 
     return (
         <div className="pizza-block-wrapper">
@@ -34,7 +52,7 @@ const Index = ( { imageUrl, title, types, sizes, price } ) => {
                 </div>
                 <div className="pizza-block__bottom">
                     <div className="pizza-block__price">от { price } ₽</div>
-                    <button className="button button--outline button--add">
+                    <button className="button button--outline button--add" onClick={ onClickAdd }>
                         <svg width="12"
                              height="12"
                              viewBox="0 0 12 12"
@@ -45,7 +63,9 @@ const Index = ( { imageUrl, title, types, sizes, price } ) => {
                                 fill="white"/>
                         </svg>
                         <span>Добавить</span>
-                        <i>0</i>
+                        {
+                            addedCount ? <i>{ addedCount }</i> : ''
+                        }
                     </button>
                 </div>
             </div>
@@ -53,4 +73,4 @@ const Index = ( { imageUrl, title, types, sizes, price } ) => {
     )
 }
 
-export default Index
+export default PizzaBlock

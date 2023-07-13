@@ -1,33 +1,42 @@
 import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
 
-const Sort = ( { sortItems, value, onChangeSort } ) => {
+
+export const sortItems = [
+    { name: 'популярности ↓', sortProperty: 'rating' },
+    { name: 'популярности ↑', sortProperty: '-rating' },
+    { name: 'цене ↓', sortProperty: 'price' },
+    { name: 'цене ↑', sortProperty: '-price' },
+    { name: 'алфавиту ↓', sortProperty: 'title' },
+    { name: 'алфавиту ↑', sortProperty: '-title' }
+]
+const Sort = () => {
 
     const [ showPopup, setShowPopup ] = useState( false )
-    // const [ activeSortItem, setActiveSortItem ] = useState( 0 )
-    const sort = useRef()
+    const sortRef = useRef()
+
+    const dispatch = useDispatch()
+    const sort = useSelector( state => state.filter.sort )
 
     useEffect( () => {
         document.body.addEventListener( 'click', handleOutsideClick )
+        return () => document.body.removeEventListener( 'click', handleOutsideClick )
     }, [] )
 
-    // const onClickSortItem = (index) => {
-    //     setActiveSortItem( index )
-    //     setShowPopup( false )
-    // }
-
-    const onClickSortItem = ( index ) => {
-        onChangeSort( index )
+    const onClickSortItem = ( obj ) => {
+        dispatch( setSort( obj ) )
         setShowPopup( false )
     }
 
-    const handleOutsideClick = ( e ) => {
-        if ( !e.composedPath().includes( sort.current ) ) {
+    const handleOutsideClick = ( event ) => {
+        if ( !event.composedPath().includes( sortRef.current ) ) {
             setShowPopup( false )
         }
     }
 
     return (
-        <div ref={ sort } className="sort">
+        <div ref={ sortRef } className="sort">
             <div className="sort__label">
                 <svg
                     width="10"
@@ -41,18 +50,17 @@ const Sort = ( { sortItems, value, onChangeSort } ) => {
                     />
                 </svg>
                 <b>Сортировка по:</b>
-                {/*<span onClick={ () => setShowPopup( !showPopup ) }>{ sortItems[ activeSortItem ] }</span>*/ }
-                <span onClick={ () => setShowPopup( !showPopup ) }>{ value.name }</span>
+                <span onClick={ () => setShowPopup( !showPopup ) }>{ sort.name }</span>
             </div>
             {
                 showPopup && <div className="sort__popup">
                     <ul>
                         {
-                            sortItems.map( ( obj, index ) => <li key={ obj.name }
-                                                                 onClick={ () => onClickSortItem( obj ) }
-                                // className={ activeSortItem === index ? 'active' : '' }
-                                                                 className={ value.sortProperty === obj.sortProperty ? 'active' : '' }
-                            >{ obj.name }</li> )
+                            sortItems.map( ( obj, index ) => (
+                                <li key={ obj.name }
+                                    onClick={ () => onClickSortItem( obj ) }
+                                    className={ sort.sortProperty === obj.sortProperty ? 'active' : '' }
+                                >{ obj.name }</li> ) )
                         }
                     </ul>
                 </div>
