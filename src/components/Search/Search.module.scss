@@ -14,6 +14,11 @@
     border: 1px solid #fe5f1e;
     box-shadow: 1px 1px 5px 1px #f8ac90;
   }
+
+  @media (max-width: 420px) {
+    width: unset;
+  }
+
 }
 
 .icon {

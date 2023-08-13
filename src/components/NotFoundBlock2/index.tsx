@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.scss'
 
-const NotFoundBlock2 = () => {
+const NotFoundBlock2: React.FC = () => {
     return (
         <div className="container">
             <div style={ { textAlign: 'center' } }>

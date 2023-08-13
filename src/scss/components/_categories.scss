@@ -27,6 +27,9 @@
         background-color: #282828;
         color: #fff;
       }
+      @media (max-width: 480px){
+        padding: 6px 12px;
+      }
     }
   }
 }

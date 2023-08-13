@@ -1,24 +1,26 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import CartItem from '../CartItem';
-import { clearItems } from '../../redux/slices/cartSlice';
+import {Link} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import CartItem from '../CartItemBlock';
+// import {clearItems, selectCart} from '../../redux/slices/cartSlice';
 import CartEmpty from '../CartEmpty';
+import {selectCart} from "../../redux/cart/selectors";
+import {clearItems} from "../../redux/cart/slice";
 
-const Cart = () => {
+const Cart: React.FC = () => {
 
     const dispatch = useDispatch()
-    const { items, totalPrice } = useSelector( state => state.cart )
+    const {items, totalPrice} = useSelector(selectCart)
 
-    const totalCount = items.reduce( ( sum, item ) => sum + item.count, 0 )
+    const totalCount = items.reduce((sum: number, item: any) => sum + item.count, 0)
 
     const onClickClear = () => {
-        if ( window.confirm( 'Are you sure you want to clear your cart?' ) ) {
-            dispatch( clearItems() )
+        if (window.confirm('Are you sure you want to clear your cart?')) {
+            dispatch(clearItems())
         }
     }
 
-    if ( !totalPrice ) return <CartEmpty/>
+    if (!totalPrice) return <CartEmpty/>
 
     return (
         <div className="container container--cart">
@@ -38,7 +40,7 @@ const Cart = () => {
                         </svg>
                         Корзина
                     </h2>
-                    <div onClick={ onClickClear } className="cart__clear">
+                    <div onClick={onClickClear} className="cart__clear">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M2.5 5H4.16667H17.5" stroke="#B6B6B6" strokeWidth="1.2" strokeLinecap="round"
                                   strokeLinejoin="round"/>
@@ -54,12 +56,12 @@ const Cart = () => {
                     </div>
                 </div>
                 <div className="content__cart-items">
-                    { items.map( item => <CartItem key={ item.id } { ...item }/> ) }
+                    {items.map((item: any) => <CartItem key={item.id} {...item}/>)}
                 </div>
                 <div className="cart__bottom">
                     <div className="cart__bottom-details">
-                        <span> Всего пицц: <b>{ totalCount } шт.</b> </span>
-                        <span> Сумма заказа: <b>{ totalPrice } UAH</b> </span>
+                        <span> Всего пицц: <b>{totalCount} шт.</b> </span>
+                        <span> Сумма заказа: <b>{totalPrice} UAH</b> </span>
                     </div>
                     <div className="cart__bottom-buttons">
                         <Link to="/" className="button button--outline button--add go-back-btn">
