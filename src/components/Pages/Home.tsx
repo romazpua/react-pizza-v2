@@ -1,6 +1,5 @@
-import React, {useCallback, useContext, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef} from 'react';
 import Categories from '../Categories';
-import Sort, {sortItems} from '../SortPopup';
 import Skeleton from '../PizzaBlock/Skeleton';
 import PizzaBlock from '../PizzaBlock';
 import Pagination from '../Pagination';
@@ -25,6 +24,11 @@ import {fetchPizzas} from "../../redux/pizza/asyncActions";
 
 const Home: React.FC = () => {
 
+    // Динамический импорт для код-сплиттинга (для оптимизации загрузки сайта)
+    // import('../../utils/math').then(math => {
+    //     console.log(math.add(777, 888))
+    // })
+
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const isSearch = useRef(false)
@@ -41,6 +45,7 @@ const Home: React.FC = () => {
         console.log(`to page ${page}`)
         dispatch(setCurrentPage(page))
     }
+
 
     const getPizzas = async () => {
         const sortBy = sort.sortProperty.replace('-', '')

@@ -34,7 +34,7 @@ const FullPizza: React.FC = () => {
     }, []);
 
     if (!pizza) {
-        return <>Downloading...</>
+        return <div className='loading'>Загрузка...</div>
     }
 
     return (
