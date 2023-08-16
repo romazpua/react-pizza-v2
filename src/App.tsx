@@ -10,9 +10,9 @@ import Loading from "./components/Loading";
 // import FullPizza from './components/Pages/FullPizza';
 
 // Rect.lazy
-const Cart = lazy(() => import('./components/Pages/Cart'))
-const NotFound = lazy(() => import('./components/Pages/NotFound'))
-const FullPizza = lazy(() => import('./components/Pages/FullPizza'))
+const Cart = lazy(() => import(/* webpackChunkName: 'Cart'*/ './components/Pages/Cart'))
+const NotFound = lazy(() => import(/* webpackChunkName: 'NotFound'*/ './components/Pages/NotFound'))
+const FullPizza = lazy(() => import(/* webpackChunkName: 'FullPizza'*/ './components/Pages/FullPizza'))
 
 function App() {
     return (
@@ -21,11 +21,9 @@ function App() {
             <div className="content">
                 <Routes>
                     <Route path={'/'} element={<Home/>}/>
-                    <Route path={'/cart'} element={<Suspense
-                        fallback={<Loading/>}><Cart/></Suspense>}/>
+                    <Route path={'/cart'} element={<Suspense fallback={<Loading/>}><Cart/></Suspense>}/>
                     <Route path={'/pizza/:id'} element={<Suspense fallback={<Loading/>}><FullPizza/></Suspense>}/>
-                    <Route path={'*'} element={<Suspense
-                        fallback={<Loading/>}><NotFound/></Suspense>}/>
+                    <Route path={'*'} element={<Suspense fallback={<Loading/>}><NotFound/></Suspense>}/>
                     // Suspense - для ленивой загрузки компонента (lazy)
                 </Routes>
             </div>
